@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Justika | AI Decision Support Workspace</title>
+    <meta name="description" content="Workspace Justika untuk AI decision support hukum pidana Indonesia.">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body data-page="ai">
+    <header class="site-header compact">
+        <a class="brand" href="/" aria-label="Justika home">
+            <span class="brand-mark">J</span>
+            <span>
+                <strong>Justika</strong>
+                <small>Developed By Polyvor Labs</small>
+            </span>
+        </a>
+        <nav class="nav-links" aria-label="Navigasi utama">
+            <a href="/">Beranda</a>
+            <a class="button button-ghost" href="/ai">AI Workspace</a>
+        </nav>
+    </header>
+
+    <main class="workspace-shell">
+        <section class="workspace-heading">
+            <p class="eyebrow dark">AI Decision Support Workspace</p>
+            <h1>Analisis awal perkara dengan Justika</h1>
+            <p>
+                Masukkan kronologi perkara, lalu jalankan analisis berbasis Gemini. Output ini
+                decision-support dan wajib diperiksa manusia sebelum dipakai.
+            </p>
+            <p class="data-disclaimer">
+                Basis data Justika diambil dari PP, UU, UUD, dan UUDRT periode 1945-2023.
+            </p>
+        </section>
+
+        <section class="workspace-layout">
+            <form id="analysis-form" class="analysis-panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Kronologi Perkara</h2>
+                        <p>Gunakan fakta yang spesifik, singkat, dan anonim.</p>
+                    </div>
+                    <button class="icon-button" type="button" id="fill-example" title="Isi contoh kronologi" aria-label="Isi contoh kronologi">+</button>
+                </div>
+
+                <label for="case-text">Kronologi/fakta kasus</label>
+                <textarea id="case-text" name="case_text" rows="10" placeholder="Contoh: Pelaku mengambil motor korban di parkiran minimarket tanpa izin, lalu menjualnya..."></textarea>
+
+                <details class="advanced-options">
+                    <summary>Pengaturan lanjutan</summary>
+                    <div class="form-grid controls-grid">
+                        <label>
+                            Jumlah rujukan
+                            <input name="top_k" id="top-k" type="number" min="3" max="10" value="5">
+                        </label>
+                        <label class="toggle-row">
+                            <input name="decision_mode" id="decision-mode" type="checkbox" checked>
+                            <span>Susun keputusan awal</span>
+                        </label>
+                    </div>
+                </details>
+
+                <div class="form-actions">
+                    <button class="button button-primary" type="submit" id="submit-button">Analisis Sekarang</button>
+                    <button class="button button-secondary" type="button" id="clear-button">Bersihkan</button>
+                </div>
+                <p class="fine-print">
+                    Hasil bersifat analisis awal dan tetap perlu validasi ahli hukum. Data rujukan berasal dari
+                    PP, UU, UUD, dan UUDRT periode 1945-2023.
+                </p>
+            </form>
+
+            <section class="result-panel" aria-live="polite">
+                <div id="empty-state" class="empty-state">
+                    <h2>Belum ada hasil analisis</h2>
+                    <p>Jalankan analisis untuk melihat keputusan awal, analisis tambahan, dan dasar hukum utama.</p>
+                </div>
+
+                <div id="loading-state" class="loading-state hidden">
+                    <span class="loader"></span>
+                    <p>Mencari pasal relevan dan menyusun analisis...</p>
+                </div>
+
+                <div id="error-state" class="error-state hidden"></div>
+
+                <div id="result-state" class="hidden">
+                    <div id="decision-card"></div>
+                    <div class="tabs" role="tablist" aria-label="Hasil analisis">
+                        <button class="tab-button active" type="button" data-tab="analysis">Keputusan</button>
+                        <button class="tab-button" type="button" data-tab="sources">Dasar Hukum</button>
+                    </div>
+                    <section id="tab-analysis" class="tab-panel active"></section>
+                    <section id="tab-sources" class="tab-panel"></section>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>Justika</span>
+        <span>Developed By Polyvor Labs</span>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
